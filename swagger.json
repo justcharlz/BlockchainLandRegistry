@@ -1,0 +1,4986 @@
+{  
+    "openapi": "3.0.0",
+    "info":{  
+       "description":"This is Sterling Tokenized Shares Project API Documentation",
+       "version":"1.0.0",
+       "title":"Sterling Tokenized Shares"
+    },
+    "servers": [{
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    },
+    {
+      "url": "http://172.18.4.114:3000/api/v1",
+      "description": "Development server"
+    },
+    {
+      "url": "https://172.18.4.114:3443/api/v1",
+      "description": "SSL Development server"
+    },
+   {
+      "url": "https://pass.sterling.ng/tokenshares/api/v1",
+      "description": "PASS reroute access server"
+   }],
+    "schemes":[  
+       "http", 
+       "https"
+    ],
+    "paths":{  
+      "/ping":{  
+         "get":{  
+            "summary":"Ping Server",
+            "description":"This returns true if the server is up and false if the server is down",
+            "responses":{  
+               "200":{  
+                  "description": "successful operation",
+                     "content" : {
+                        "application/json" : {
+                           "schema":{  
+                              "$ref":"#/components/schemas/SuccessResponse"
+                           }
+                       }  
+                     }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/user/register":{  
+         "post":{  
+            "tags": ["Authentication Operations"],
+            "summary":"User First Time Login",
+            "description":"This profiles the user on the application as their first time login",
+            "parameters": [],
+            "requestBody":{  
+                  "description":"First Time Login Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/FirstTimeLoginRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/LoginResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/login":{  
+         "post":{  
+            "tags": ["Authentication Operations"],
+            "summary":"Returning User Login",
+            "description":"This Authenticates Returning User Login",
+            "parameters": [],
+            "requestBody":{  
+                  "description":"Login Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/LoginRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/LoginResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/login":{  
+         "post":{  
+            "tags": ["Authentication Operations"],
+            "summary":"Super Admin or Admin Login",
+            "description":"This Authenticates For Super Admin or Admin Login",
+            "parameters": [],
+            "requestBody":{  
+                  "description":"Login Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/LoginRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/LoginResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/dashboard":{  
+         "get":{  
+            "tags": ["User Operations"],
+            "summary":"User Dashboard",
+            "description":"This Returns Information For User Dashboard Display; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": ""
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UserDashboardResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/getSharePrice":{  
+         "get":{  
+            "tags": ["User Operations"],
+            "summary":"Get Share Price Unit",
+            "description":"This allows user to get the unit share price. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/RequirementResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+      },
+      "/user/wallet/shares":{  
+         "get":{  
+            "tags": ["User Operations : Share Wallet"],
+            "summary":"User Share Wallet",
+            "description":"This Returns All Info On User Shares; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": ""
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UserShareResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/shares/transfer":{  
+         "post":{  
+            "tags": ["User Operations : Share Wallet"],
+            "summary":"Transfer Shares",
+            "description":"This allows a user transfer shares to another user; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": ""
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/TransferSharesRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UserShareResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/shares/transactions":{  
+         "get":{  
+            "tags": ["User Operations : Share Wallet"],
+            "summary":"User Share Wallet",
+            "description":"This returns all shares transaction info for a user; This endpoint requires 'offset' and 'limit' (value : Must be a number). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  { 
+                  "name": "offset",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to offset"
+                  },
+                  { 
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to fetch after offseting"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TransactionResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira":{  
+         "get":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"User Naira Wallet",
+            "description":"This returns all info on user Naira wallet; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UserNairaResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/changeTransactionPin":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Change Transaction pin",
+            "description":"This allows a users change their transaction pin; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/ChangePinRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/verifyAccount":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Verify Account",
+            "description":"This sends a validation OTP to the mobile number attached to user account given; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/VerifyAccountRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/addAccount":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Add Account",
+            "description":"This allows a user to add a bank account to her profile; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/AddAccountRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/AddAccountResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/removeAccount":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Remove Account",
+            "description":"This allows a user to remove a bank account to her profile; This endpoint requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Remove Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/RemoveAccountRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/RemoveAccountResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/transactions":{  
+         "get":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"User naira Wallet",
+            "description":"This returns all naira transaction info for a user; This endpoint requires 'offset' and 'limit' (value : Must be a number). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  { 
+                  "name": "offset",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to offset"
+                  },
+                  { 
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to fetch after offseting"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TransactionResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/checktradingwindow":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Check Trading Window",
+            "description":"This returns a successful response if there is an open trading window; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All Trades",
+            "description":"This returns all existing trades on the platform, both closed and open; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/user":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All User Trades",
+            "description":"This returns all user trades on the platform, both closed and open; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/openTrades":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All Open Trades",
+            "description":"This returns all open trades; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/closedTrades":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All Closed Trades",
+            "description":"This returns all closed trades; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/user/openTrades":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All User Open Trades",
+            "description":"This returns all open trades on a user account; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/user/closedTrades":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All User Closed Trades",
+            "description":"This returns all closed trades on a user account; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/mopOpenTrades":{  
+         "post":{  
+            "tags": ["Admin Operations : Market "],
+            "summary":"BuyBack All Open Trades",
+            "description":"This allows admin to buyback all open trades; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+               "description":"Add Mop-Up Open Trade Request Body",
+               "required":false,
+               "content" : {
+                  "application/json" : {
+                     "schema":{  
+                        "$ref":"#/components/schemas/MopOpenTradeRequest"
+                     }
+                 }  
+               }
+         },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradesResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/transactions":{  
+         "get":{  
+            "tags": ["Admin Operations : Market "],
+            "summary":"Get All Trading Transactions",
+            "description":"This returns all trading transactions on the platform for a specified; This endpoint requires 'offset' and 'limit' (value : Must be a number). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  { 
+                  "name": "offset",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to offset"
+                  },
+                  { 
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to fetch after offseting"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TransactionResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/user/transactions":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Get All User Trading Transactions",
+            "description":"This returns all trading transactions on the platform; This endpoint requires 'offset' and 'limit' (value : Must be a number). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  { 
+                  "name": "offset",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to offset"
+                  },
+                  { 
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "number"
+                  },
+                  "description": "How many records to fetch after offseting"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TransactionResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/buyOrder":{  
+         "post":{  
+            "tags": ["Market Operations"],
+            "summary":"Create A Buy Request",
+            "description":"This allows a user put up a buy request. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Buy Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/TradeRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/sellOrder":{  
+         "post":{  
+            "tags": ["Market Operations"],
+            "summary":"Create A Sell Request",
+            "description":"This allows a user put up a sell request. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Sell Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/TradeRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/updateTrade":{  
+         "post":{  
+            "tags": ["Market Operations"],
+            "summary":"Update A Trade",
+            "description":"This allows a user update a trade. This endpoint also requires the tradeId, to be sent as a query or param and also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               { 
+                  "name": "tradeId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Trade Id"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Update Trade Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/UpdateTradeRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/buyShares":{  
+         "post":{  
+            "tags": ["Market Operations"],
+            "summary":"Buy Shares",
+            "description":"This allows a user to buy shares. This endpoint also requires the tradeId, to be sent as a query or param and also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               { 
+                  "name": "tradeId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Trade Id"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Buy Shares Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/ActionTradeRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/sellShares":{  
+         "post":{  
+            "tags": ["Market Operations"],
+            "summary":"Buy Shares",
+            "description":"This allows a user to sell shares. This endpoint also requires the tradeId, to be sent as a query or param and also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               { 
+                  "name": "tradeId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Trade Id"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Sell Shares Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/ActionTradeRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/market/cancelTrade":{  
+         "get":{  
+            "tags": ["Market Operations"],
+            "summary":"Cancel A Buy or Sell Request",
+            "description":"This allows a user to cancel a buy or sell request in the market. This endpoint also requires the tradeId, to be sent as a query or param and also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               { 
+                  "name": "tradeId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Trade Id"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/users":{  
+         "get":{  
+            "tags": ["Admin Operations : User Management"],
+            "summary":"Get All Users",
+            "description":"This returns all users on the platform; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UsersResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/dashboard":{  
+         "get":{  
+            "tags": ["Admin Operations : Dashboard"],
+            "summary":"Get All Users",
+            "description":"This returns data for the dashboard; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/AdminDashboardResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/getSharePrice":{  
+         "get":{  
+            "tags": ["Admin Operations : Dashboard"],
+            "summary":"Get Share Price Unit",
+            "description":"This allows the super admin to get the unit share price. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/RequirementResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedules":{  
+         "get":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Get All Schedules",
+            "description":"This returns all schedules on the platform; This endpoint requires a 'filter' (value can be either of the following : 'Completed','Rejected','In Progress','Pending Approval','Approved','Ongoing Approval', 'All') field be sent via query string or url param. It also requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               { 
+                  "name": "filter",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Filter Schedule Param"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/ScheduleResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approver/schedules":{  
+         "get":{  
+            "tags": ["Approver Operations : Pending Schedules"],
+            "summary":"Get All Pending Schedules For Approver",
+            "description":"This returns all pending schedules on the platform. It also requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/ScheduleResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedules/allocation":{  
+         "get":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Get All Schedule Allocations",
+            "description":"This returns all allocations for a given schedule on the platform;This endpoint also requires the schedule id and a 'filter' (value can be either of the following : 'Completed','Ongoing','Failed', 'Terminated', 'All') field to be sent via query string or url param. It also requires an authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               }, 
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+               },
+               { 
+                  "name": "filter",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Filter Allocation Param"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/ScheduleResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedules/single":{  
+         "get":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Get All Users",
+            "description":"This returns details of a single schedule on the platform; This endpoint also requires the schedule id to be sent as a query or param and also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/ScheduleResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedule/create":{  
+         "post":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Create Schedule",
+            "description":"This allows an admin create a schedule on the platform. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+               "description":"Add Schedule Request Body",
+               "required":true,
+               "content" : {
+                  "multipart/form-data" : {
+                     "schema":{  
+                        "$ref":"#/components/schemas/ScheduleRequest"
+                     }
+                  }
+               }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedule/mintonschedule":{  
+         "post":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Distribute On Schedule",
+            "description":"This allows an admin allocate shares to users based on a given approved schedule on the platform; This endpoint requires scheduleId (value : id of the schedule to distribute on). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+               "description":"Mint On Schedule Request Body",
+               "required":true,
+               "content" : {
+                  "multipart/form-data" : {
+                     "schema":{  
+                        "$ref":"#/components/schemas/MintScheduleRequest"
+                     }
+                  }
+               }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/schedule/update":{  
+         "get":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Update Schedule",
+            "description":"This allows an admin update a schedule on the platform; This endpoint requires scheduleId (value : schedule of the schedule to update). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+               "description":"Update Schedule Request Body",
+               "required":true,
+               "content" : {
+                  "multipart/form-data" : {
+                     "schema":{  
+                        "$ref":"#/components/schemas/ScheduleRequest"
+                     }
+                  }
+               }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approver/schedule/approve":{  
+         "post":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Approve Schedule",
+            "description":"This allows an approver approve a schedule on the platform; This endpoint requires scheduleId (value : schedule of the schedule to update). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Schedule Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/ApprovalRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approver/schedule/reject":{  
+         "post":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Reject Schedule",
+            "description":"This allows an approver reject a schedule on the platform; This endpoint requires scheduleId (value : schedule of the schedule to update). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Add Schedule Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/ApprovalRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approver/schedule/undoApproval":{  
+         "get":{  
+            "tags": ["Admin Operations : Schedule Management"],
+            "summary":"Undo Approval On A Schedule",
+            "description":"This allows an approver undo an approval on a schedule on the platform; This endpoint requires scheduleId (value : schedule of the schedule to update). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "scheduleId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Schedule Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/opentradingwindow":{  
+         "get":{  
+            "tags": ["Admin Operations : Trading Window"],
+            "summary":"Open A Trading Window",
+            "description":"This allows an admin open a trading window. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/tradingWindows":{  
+         "get":{  
+            "tags": ["Admin Operations : Trading Window"],
+            "summary":"Get All Trading Window",
+            "description":"This returns all closed or open trading windows on the platform, both closed and open; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/TradingWindowResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/closetradingwindow":{  
+         "get":{  
+            "tags": ["Admin Operations : Trading Window"],
+            "summary":"Close A Trading Window",
+            "description":"This allows an admin close a trading window; This endpoint requires windowId (value : window id of the trading window to close). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+               { 
+                  "name": "windowId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "window Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/users/single":{  
+         "get":{  
+            "tags": ["Admin Operations : User Management"],
+            "summary":"Get User Profile",
+            "description":"This returns both the platform and AD profile of a user; This endpoint requires userId (value : userId of the user to fetch). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "userId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "User Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UserResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/users/activate":{  
+         "get":{  
+            "tags": ["Admin Operations : User Management"],
+            "summary":"Activate User Profile",
+            "description":"This activates a user for operations on the platform; This endpoint requires userId (value : userId of the user to activate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "userId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "User Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/users/deactivate":{  
+         "get":{  
+            "tags": ["Admin Operations : User Management"],
+            "summary":"Deactivate User Profile",
+            "description":"This deactivates a user for operations on the platform; This endpoint requires userId (value : userId of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "userId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "User Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/users/deactivate":{  
+         "get":{  
+            "tags": ["Admin Operations : User Management"],
+            "summary":"Deactivate User Profile",
+            "description":"This deactivates a user for operations on the platform; This endpoint requires userId (value : userId of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "userId",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "User Id"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/setSharePrice":{  
+         "post":{  
+            "tags": ["Super Admin Operations : Settings Management"],
+            "summary":"Set Unit Share Price",
+            "description":"This allows the super admin to set unit share price. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "requestBody":{  
+               "description":"Share Price Request Body",
+               "required":true,
+               "content" : {
+                  "application/json" : {
+                     "schema":{  
+                        "$ref":"#/components/schemas/SharePriceRequest"
+                     }
+                 }  
+               }
+         },
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        } 
+      },
+      "/admin/setApprovalRequirements":{  
+         "post":{  
+            "tags": ["Super Admin Operations : Settings Management"],
+            "summary":"Set Approval Requirement",
+            "description":"This allows the super admin to set the number of approvals required for a schedule to be approved. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "requestBody":{  
+                  "description":"Lien Duration Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/RequirementRequest"
+                        }
+                    }  
+                  }
+            },
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/fundByAccount":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Fund Wallet From Account",
+            "description":"This allows a user to fund their wallet directly from their bank account. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Fund By Account Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/FundFromAccountRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/FundFromAccountResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/fundByCard":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Fund Wallet From Card",
+            "description":"This allows a user to fund their wallet via card. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Fund By Card Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/FundFromCardRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/FundFromCardResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/user/wallet/naira/cashout":{  
+         "post":{  
+            "tags": ["User Operations : Naira Wallet"],
+            "summary":"Cashout From Wallet",
+            "description":"This allows a user to cashout from their wallet. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "requestBody":{  
+                  "description":"Cashout Request Body",
+                  "required":true,
+                  "content" : {
+                     "application/json" : {
+                        "schema":{  
+                           "$ref":"#/components/schemas/CashoutRequest"
+                        }
+                    }  
+                  }
+            },
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/CashoutResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admins":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Admin Management"],
+            "summary":"Get All Admins",
+            "description":"This returns all admins on the platform; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UsersResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      }, 
+      "/admins/add":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Admin Management"],
+            "summary":"Add Admin",
+            "description":"This sets a user as an admin on the platform; This endpoint requires username (value : username of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+               },
+               {
+                  "name": "username",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Username"
+               }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admins/remove":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Admin Management"],
+            "summary":"Remove Admin",
+            "description":"This removes a user as an admin on the platform; This endpoint requires username (value : username of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "username",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Username"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approvers":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Approvers Management"],
+            "summary":"Get All Approvers",
+            "description":"This returns all approvers on the platform; This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/UsersResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approvers/add":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Approvers Management"],
+            "summary":"Add Approver",
+            "description":"This sets a user as an approver on the platform; This endpoint requires username (value : username of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "username",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Username"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/approvers/remove":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Approvers Management"],
+            "summary":"Remove Approver",
+            "description":"This removes a user as an approver on the platform; This endpoint requires username (value : username of the user to deactivate). This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  },
+                  {
+                  "name": "username",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Username"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/SuccessResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      },
+      "/admin/getApprovalRequirements":{  
+         "get":{  
+            "tags": ["Super Admin Operations : Settings Management"],
+            "summary":"Get Approval Requirement",
+            "description":"This allows the super admin to get the number of approvals required for a schedule to be approved. This endpoint also requires authorization token to be sent via the header,url query or via request body",
+            "parameters": [
+               { 
+                  "name": "token",
+                  "in": "query",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "description": "Authorization Token"
+                  }
+            ],
+            "security": [
+               {
+                  "ApiKeyAuth": []
+               }
+            ],
+            "responses":{  
+               "200":{  
+                  "description":"successful operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/RequirementResponse"
+                        }
+                     }
+                  }
+               }, 
+               "400":{  
+                  "description":"Bad Request operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }, 
+               "500":{  
+                  "description":"Server Failure operation",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref":"#/components/schemas/errorResponse"
+                        }
+                     }
+                  }
+               }
+            }
+        }
+         
+      }
+    },
+    "components": {
+      "schemas": {
+         "LoginRequest":{  
+            "type":"object",
+            "required":[  
+               "username",
+               "password"
+            ],
+            "properties":{            
+               "username":{  
+                  "type":"string",
+                  "example":"okaforsc"
+               },          
+               "password":{  
+                  "type":"string",
+                  "example":"password2"
+               }
+            }
+         },
+         "FirstTimeLoginRequest":{  
+            "type":"object",
+            "required":[  
+               "username",
+               "password",
+               "transactionPin"
+            ],
+            "properties":{            
+               "username":{  
+                  "type":"string",
+                  "example":"okaforsc"
+               },          
+               "password":{  
+                  "type":"string",
+                  "example":"password2"
+               },       
+               "transactionPin":{  
+                  "type":"number"
+               }
+            }
+         },
+         "LoginResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "profile" : {
+                        "type" : "object",
+                        "properties" : {
+                           "userType": {
+                              "type" : "string"
+                           },
+                           "status":  {
+                              "type" : "boolean"
+                           },
+                           "_id":  {
+                              "type" : "string"
+                           },
+                           "username":  {
+                              "type" : "string"
+                           },
+                           "walletId":  {
+                              "type" : "string"
+                           },
+                           "authToken":  {
+                              "type" : "string"
+                           } 
+                        }
+                     },
+                     "permissions": {
+                        "type" : "array",
+                        "items" : {
+                           "type" : "object",
+                           "properties" : {
+                              "methods":{
+                                 "type" : "array",
+                                 "items" : {
+                                    "type" : "string"
+                                 }
+                              },
+                              "action": {
+                                 "type" : "string"
+                              },
+                              "slug": {
+                                 "type" : "string"
+                              }
+
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "UserDashboardResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "profile" : {
+                        "type" : "object",
+                        "properties" : {
+                           "appProfile": {
+                              "type" : "object",
+                              "properties" : {
+                                 "userType": {
+                                    "type" : "string"
+                                 },
+                                 "status":  {
+                                    "type" : "boolean"
+                                 },
+                                 "_id":  {
+                                    "type" : "string"
+                                 },
+                                 "username":  {
+                                    "type" : "string"
+                                 },
+                                 "walletId":  {
+                                    "type" : "string"
+                                 }
+                              }
+                           },
+                           "adProfile":  {
+                              "type" : "Object",
+                              "properties" : {
+                                 "username": {
+                                    "type" : "string"
+                                 },
+                                 "fullname":  {
+                                    "type" : "string"
+                                 },
+                                 "email":  {
+                                    "type" : "string"
+                                 },
+                                 "firstname":  {
+                                    "type" : "string"
+                                 },
+                                 "lastname":  {
+                                    "type" : "string"
+                                 },
+                                 "staffid":  {
+                                    "type" : "string"
+                                 },
+                                 "personalTitle":  {
+                                    "type" : "string"
+                                 }
+                              }
+                           }
+                        }
+                     },
+                     "SharesWallet" : {
+                        "type" : "number"
+                     },
+                     "fiatWallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "string"
+                           },
+                           "activeAccounts":  {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string"
+                              }
+                           }
+                        }
+                     },
+                     "openSales": {
+                        "type" : "array",
+                        "items" : {
+                           "type" : "object",
+                           "properties" : {
+                              "userId":{
+                                 "type" : "string"
+                              },
+                              "price" : {
+                                 "type" : "number"
+                              },
+                              "isOpen": {
+                                 "type" : "boolean"
+                              },
+                              "initialVolume": {
+                                 "type" : "number"
+                              },
+                              "volume": {
+                                 "type" : "number"
+                              }
+                           }
+                        }
+                     },
+                     "tradingHistories": {
+                        "type" : "array",
+                        "items" : {
+                           "type" : "object",
+                           "properties" : {
+                              "userId":{
+                                 "type" : "string"
+                              },
+                              "type":{
+                                 "type" : "string",
+                                 "example" : "Fund"
+                              },
+                              "wallet":{
+                                 "type" : "string",
+                                 "example" : "Shares"
+                              },
+                              "from":{
+                                 "type" : "string"
+                              },
+                              "to":{
+                                 "type" : "string"
+                              },
+                              "status":{
+                                 "type" : "string",
+                                 "example" : "In Progress"
+                              },
+                              "remark": {
+                                 "type" : "string"
+                              },
+                              "txHash": {
+                                 "type" : "string"
+                              },
+                              "amount": {
+                                 "type" : "number",
+                                 "example" : "300"
+                              },
+                              "volume": {
+                                 "type" : "number"
+                              },
+                              "mode": {
+                                 "type" : "string",
+                                 "example" : "Card"
+                              }
+
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "UserShareResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "SharesWallet" : {
+                        "type" : "Number"
+                     }
+                  }
+               }
+            }
+         },
+         "UserNairaResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           },
+                           "createdAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           },
+                           "updatedAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "AddAccountRequest":{  
+            "type":"object",
+            "required":[  
+               "account",
+               "otp"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               },
+               "otp":{  
+                  "type":"number"
+               }
+            }
+         },
+         "VerifyAccountRequest":{  
+            "type":"object",
+            "required":[  
+               "account"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               }
+            }
+         },
+         "ChangePinRequest":{  
+            "type":"object",
+            "required":[  
+               "oldPin",
+               "newPin"
+            ],
+            "properties":{            
+               "oldPin":{  
+                  "type":"number"
+               },            
+               "newPin":{  
+                  "type":"number"
+               }
+            }
+         },
+         "AddAccountResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           },
+                           "createdAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           },
+                           "updatedAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "RemoveAccountRequest":{  
+            "type":"object",
+            "required":[  
+               "account"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               }
+            }
+         },
+         "RemoveAccountResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           },
+                           "createdAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           },
+                           "updatedAt": {
+                              "type" : "string",
+                              "example" : "2019-10-02T13:39:40.235Z"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "UserResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "userType": {
+                        "type" : "string"
+                     },
+                     "status":  {
+                        "type" : "boolean"
+                     },
+                     "_id":  {
+                        "type" : "string"
+                     },
+                     "username":  {
+                        "type" : "string"
+                     },
+                     "walletId":  {
+                        "type" : "string"
+                     },
+                     "lastLogin":  {
+                        "type" : "string"
+                     }
+                  }
+               }
+            }
+         },
+         "UsersResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "users": {
+                        "type" : "array",
+                        "items" : {
+                           "type":"object",
+                           "properties" : {
+                              "userType": {
+                                 "type" : "string"
+                              },
+                              "status":  {
+                                 "type" : "boolean"
+                              },
+                              "_id":  {
+                                 "type" : "string"
+                              },
+                              "username":  {
+                                 "type" : "string"
+                              },
+                              "walletId":  {
+                                 "type" : "string"
+                              },
+                              "lastLogin":  {
+                                 "type" : "string"
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "FundFromAccountRequest":{  
+            "type":"object",
+            "required":[  
+               "account",
+               "amount"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               },         
+               "amount":{  
+                  "type":"number"
+               },        
+               "remark":{  
+                  "type":"string"
+               },     
+               "otp":{  
+                  "type":"number"
+               }
+            }
+         },
+         "FundFromAccountResponse":{  
+            "type":"object",
+            "properties":{
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "FundFromCardRequest":{  
+            "type":"object",
+            "required":[  
+               "account",
+               "amount",
+               "referenceId"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               },         
+               "amount":{  
+                  "type":"number"
+               },        
+               "referenceId":{  
+                  "type":"string"
+               },        
+               "remark":{  
+                  "type":"string"
+               }
+            }
+         },
+         "FundFromCardResponse":{  
+            "type":"object",
+            "properties":{
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "CashoutRequest":{  
+            "type":"object",
+            "required":[  
+               "account",
+               "amount",
+               "transactiontPin"
+            ],
+            "properties":{            
+               "account":{  
+                  "type":"string",
+                  "example":"0099887766"
+               },         
+               "amount":{  
+                  "type":"number"
+               },        
+               "transactiontPin":{  
+                  "type":"string"
+               },        
+               "remark":{  
+                  "type":"string"
+               }
+            }
+         },
+         "CashoutResponse":{  
+            "type":"object",
+            "properties":{
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data":{  
+                  "type":"object",
+                  "properties" : {
+                     "wallet" : {
+                        "type" : "object",
+                        "properties" : {
+                           "balance": {
+                              "type" : "number",
+                              "example" : "34.02"
+                           },
+                           "activeAccounts": {
+                              "type" : "array",
+                              "items" : {
+                                 "type" : "string",
+                                 "example" : ["0011223344", "0099887766"]
+                              }
+                           },
+                           "_id": {
+                              "type" : "string",
+                              "example" : "5d94a89cd601793c0ce199b3"
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "ScheduleRequest":{  
+            "type":"object",
+            "required":[  
+               "scheduleAmount",
+               "name",
+               "scheduleFile"
+            ],
+            "properties":{            
+               "name":{  
+                  "type":"string"
+               },         
+               "scheduleAmount":{  
+                  "type":"number"
+               },        
+               "scheduleFile":{  
+                  "type":"string",
+                  "format": "binary"
+               },        
+               "description":{  
+                  "type":"string"
+               }
+            }
+         },
+         "MintScheduleRequest":{  
+            "type":"object",
+            "required":[  
+               "scheduleFile"
+            ],
+            "properties":{          
+               "scheduleFile":{  
+                  "type":"string",
+                  "format": "binary"
+               }       
+            }
+         },
+         "ApprovalRequest":{  
+            "type":"object",
+            "properties":{            
+               "comment":{  
+                  "type":"string"
+               }
+            }
+         },
+         "RequirementRequest":{  
+            "type":"object",
+            "properties":{            
+               "comment":{  
+                  "type":"string"
+               }
+            }
+         },
+         "SharePriceRequest":{  
+            "type":"object",
+            "properties":{            
+               "price":{  
+                  "type":"number"
+               },
+               "_id":{
+                  "type" : "string"
+               }
+            }
+         },
+         "TradeRequest":{  
+            "type":"object",
+            "properties":{            
+               "price":{  
+                  "type":"number"
+               },        
+               "quantity":{  
+                  "type":"number"
+               }
+            }
+         },
+         "UpdateTradeRequest":{  
+            "type":"object",
+            "properties":{            
+               "price":{  
+                  "type":"number"
+               }
+            }
+         },
+         "ActionTradeRequest":{  
+            "type":"object",
+            "properties":{   
+               "quantity":{  
+                  "type":"number"
+               },
+               "transactionPin":{  
+                  "type":"number"
+               }
+            }
+         },
+         "MopOpenTradeRequest":{  
+            "type":"object",
+            "properties":{   
+               "volume":{  
+                  "type":"number"
+               },
+               "shareprice":{  
+                  "type":"number"
+               }
+            }
+         },
+         "TransferSharesRequest":{  
+            "type":"object",
+            "properties":{   
+               "toAccount":{  
+                  "type":"string"
+               },
+               "volume":{  
+                  "type":"number"
+               }
+            }
+         },
+         "RequirementResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data" : {
+                  "type" : "object",
+                  "properties" : {
+                     "requirement" : {
+                        "type" : "number"
+                     }
+                  }
+               }
+            }
+         },
+         "TradingWindowResponse" : {
+            "type" : "object",
+            "properties" : {
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               },
+               "data" : {
+                  "type" : "array",
+                  "items" : {
+                     "type" : "object",
+                     "properties" : {
+                        "isOpen":{
+                           "type" : "boolean"
+                        },
+                        "closingData":{
+                           "type" : "string"
+                        }
+                     }
+                  }
+               }
+            }
+         },
+         "TradesResponse" : {
+            "status":{  
+               "type":"boolean"
+            }, 
+            "code":{  
+               "type":"string"
+            },
+            "message":{  
+               "type":"string"
+            },
+            "data" : {
+               "type" : "array",
+               "items" : {
+                  "type" : "object",
+                  "properties" : {
+                     "userId":{
+                        "type" : "string"
+                     },
+                     "price":{
+                        "type" : "number",
+                        "example" : 2000
+                     },
+                     "isOpen":{
+                        "type" : "boolean"
+                     },
+                     "initialVolume":{
+                        "type" : "number",
+                        "example" : 20
+                     },
+                     "volume":{
+                        "type" : "number",
+                        "example" : 10
+                     }
+                  }
+               }
+            }
+         },
+         "TransactionResponse" : {
+            "status":{  
+               "type":"boolean"
+            }, 
+            "code":{  
+               "type":"string"
+            },
+            "message":{  
+               "type":"string"
+            },
+            "data" : {
+               "type" : "array",
+               "items" : {
+                  "type" : "object",
+                  "properties" : {
+                     "userId":{
+                        "type" : "string"
+                     },
+                     "type":{
+                        "type" : "string",
+                        "example" : "Fund"
+                     },
+                     "wallet":{
+                        "type" : "string",
+                        "example" : "Shares"
+                     },
+                     "from":{
+                        "type" : "string"
+                     },
+                     "to":{
+                        "type" : "string"
+                     },
+                     "status":{
+                        "type" : "string",
+                        "example" : "In Progress"
+                     },
+                     "remark": {
+                        "type" : "string"
+                     },
+                     "txHash": {
+                        "type" : "string"
+                     },
+                     "amount": {
+                        "type" : "number",
+                        "example" : "300"
+                     },
+                     "volume": {
+                        "type" : "number"
+                     },
+                     "mode": {
+                        "type" : "string",
+                        "example" : "Card"
+                     }
+
+                  }
+               }
+            }
+         },
+         "SuccessResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               }
+            }
+         },
+         "errorResponse" : {
+            "type":"object",
+            "properties":{ 
+               "status":{  
+                  "type":"boolean"
+               }, 
+               "code":{  
+                  "type":"string"
+               },
+               "message":{  
+                  "type":"string"
+               }
+            }
+         },
+         "securitySchemes": {
+            "BearerAuth": {
+               "type": "http",
+               "scheme": "bearer",
+               "bearerFormat": "JWT"
+            },
+            "ApiKeyAuth": {
+               "type": "apiKey",
+               "in": "header",
+               "name": "Authorization"
+
+            }
+         }
+      }
+    }
+}

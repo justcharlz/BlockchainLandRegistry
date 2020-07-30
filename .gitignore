@@ -1,0 +1,24 @@
+# dependencies
+node_modules
+
+# testing
+coverage
+test/testtx
+test/testproxy
+
+# logs
+
+# truffle
+build
+
+# environment variables
+.env
+mnemonic.env
+.zos.session
+
+# Cert
+selfsigned.key
+selfsigned.crt
+logs/app_info.log
+logs/access.log
+test/testtx.js
