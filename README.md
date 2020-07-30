@@ -1,2 +1,2 @@
 # BlockchainLandRegistry - WIP
-Creates contract for every land registry record and assign it to user. 
+Creates a tokenized contract for every land registry record and assigns it to the user address which can be transferrable or traded on an exchange.
