@@ -1,12 +1,23 @@
 # dependencies
 node_modules
 
+# folders
+controllers/
+cronJob/
+middlewares/
+models/
+routes/
+services/
+uploads/
+utils/
+
 # testing
 coverage
 test/testtx
 test/testproxy
 
 # logs
+logs/
 
 # truffle
 build

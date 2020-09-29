@@ -40,7 +40,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.17.0",
     "babel-register": "^6.23.0",
-    "bignumber.js": "^5.0.0",
+    "big-number": "^2.0.0",
     "chai": "^4.2.0",
     "compression": "^1.7.3",
     "cookie-parser": "~1.4.3",
