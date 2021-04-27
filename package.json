@@ -59,7 +59,7 @@
     "morgan": "~1.9.0",
     "nodemon": "^1.18.10",
     "randomstring": "^1.1.5",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "redis-await": "^1.0.6",
     "run-with-testrpc": "0.2.1",
     "socket.io": "^2.2.0",
