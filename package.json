@@ -62,7 +62,7 @@
     "redis": "^3.1.1",
     "redis-await": "^1.0.6",
     "run-with-testrpc": "0.2.1",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "socket.io-client": "^2.2.0",
     "winston": "^3.1.0"
   }
