@@ -16,7 +16,7 @@
     "express-validator": "^6.2.0",
     "ganache-cli": "6.1.8",
     "generate-password": "^1.4.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3",
     "read-excel-file": "^5.5.1",
