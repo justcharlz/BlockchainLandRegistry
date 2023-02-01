@@ -19,7 +19,7 @@
     "moment": "^2.24.0",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3",
-    "read-excel-file": "^4.0.3",
+    "read-excel-file": "^5.5.1",
     "soap": "^0.29.0",
     "solc": "0.5.0",
     "swagger-ui-express": "^4.1.1",
