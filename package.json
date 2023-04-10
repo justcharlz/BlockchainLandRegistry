@@ -27,7 +27,7 @@
     "truffle-assertions": "^0.9.1",
     "truffle-hdwallet-provider": "^1.0.10",
     "xlsx": "^0.17.0",
-    "xml2js": "^0.4.22",
+    "xml2js": "^0.5.0",
     "zos": "^2.4.2",
     "zos-lib": "^2.4.2"
   },
